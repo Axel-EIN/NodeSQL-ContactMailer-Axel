@@ -1,13 +1,23 @@
 import express from 'express';
 import cors from 'cors';
-import dotenv from 'dotenv';
+import contactRoutes from './src/routes/contact.route.js';
+import env from './src/config/env.js';
 
-dotenv.config();
+// Configuration de la BDD
+import './src/models/index.js';
 
+// Création serveur nodeJs / Express
 const app = express();
 
-const PORT = process.env.PORT || 8080;
+// MIDDLEWARE
+app.use(express.json());
+app.use(cors());
 
-app.listen(3001, () => {
+// ROUTES
+app.use('/api/contact', contactRoutes);
+
+const PORT = env.PORT || 8080;
+
+app.listen(PORT, () => {
     console.log(`API ouverte à l'URL http://localhost:${PORT}`);
-});
+})
